@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="com.jarvis.coockiesforwords.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="108dp">
+
+        <EditText
+            android:id="@+id/rusWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50sp"
+            android:layout_marginRight="50sp"
+            android:layout_marginTop="120sp"
+            android:background="@drawable/fields"
+            android:ems="10"
+            android:hint="Русское слово"
+            android:inputType="textPersonName"
+            android:padding="10sp"
+            android:selectAllOnFocus="false"
+            android:singleLine="false"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/colorHint"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/engWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50sp"
+            android:layout_marginRight="50sp"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/fields"
+            android:ems="10"
+            android:hint="Английское слово"
+            android:inputType="textPersonName"
+            android:padding="10sp"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/colorHint"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/addBut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50sp"
+            android:layout_marginRight="50sp"
+            android:layout_marginTop="80sp"
+            android:background="@drawable/bottons"
+            android:text="Добавить новое слово"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/repBut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="190sp"
+            android:layout_marginRight="50sp"
+            android:layout_marginTop="40sp"
+            android:background="@drawable/bottons"
+            android:text="Повторять слова"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
