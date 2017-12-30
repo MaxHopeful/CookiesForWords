@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CoockiesForWords</string>
+    <string name="title_activity_studying">StudyingActivity</string>
 </resources>

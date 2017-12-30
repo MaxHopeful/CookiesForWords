@@ -1,6 +1,7 @@
 package com.jarvis.coockiesforwords;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +11,8 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button addBut,repBut;
-    EditText rusWord,engWord;
+    private Button addBut,repBut;
+    private EditText rusWord,engWord;
 
     DBHelper dbHelper;
 
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addBut.setOnClickListener(this);
 
         repBut = (Button) findViewById(R.id.repBut);
-        addBut.setOnClickListener(this);
+        repBut.setOnClickListener(this);
 
         rusWord = (EditText) findViewById(R.id.rusWord);
         engWord = (EditText) findViewById(R.id.engWord);
@@ -33,36 +34,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dbHelper = new DBHelper(this);
     }
 
+
+
     @Override
     public void onClick(View v) {
 
         switch(v.getId()){
+
             case R.id.addBut:
 
                 String rus = rusWord.getText().toString();
                 String eng = engWord.getText().toString();
 
-                SQLiteDatabase database = dbHelper.getWritableDatabase();
+                if(!rus.equals("")&&!eng.equals("")){
+                    SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-                ContentValues contentValues = new ContentValues();
+                    ContentValues contentValues = new ContentValues();
 
-                contentValues.put(DBHelper.KEY_RUS, rus);
-                contentValues.put(DBHelper.KEY_ENG, eng);
-                database.insert(DBHelper.TABLE_WORDS, null, contentValues);
+                    contentValues.put(DBHelper.KEY_RUS, rus);
+                    contentValues.put(DBHelper.KEY_ENG, eng);
+                    database.insert(DBHelper.TABLE_WORDS, null, contentValues);
 
 
-                dbHelper.close();
+                    dbHelper.close();
+                }
 
                 break;
 
             case R.id.repBut:
 
-                //Intent intent = new Intent(this,Repeat.class);
-                //startActivity(intent);
+                Intent intent = new Intent(this,StudyingActivity.class);
+                startActivity(intent);
 
                 break;
-            default:
-                break;
+
         }
 
 
