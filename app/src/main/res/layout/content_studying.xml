@@ -6,6 +6,76 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jarvis.coockiesforwords.StudyingActivity"
+    android:background="@color/colorPrimary"
     tools:showIn="@layout/activity_studying">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="108dp">
+
+        <TextView
+            android:id="@+id/word"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50sp"
+            android:layout_marginRight="50sp"
+            android:layout_marginTop="140sp"
+            android:background="@drawable/text"
+            android:text="Здесь будет слово"
+            android:ems="10"
+            android:padding="10sp"
+            android:selectAllOnFocus="false"
+            android:singleLine="false"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/transWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50sp"
+            android:layout_marginRight="50sp"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/fields"
+            android:ems="10"
+            android:hint="Английское слово"
+            android:inputType="textPersonName"
+            android:padding="10sp"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/colorHint"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50sp"
+            android:layout_marginRight="50sp"
+            android:layout_marginTop="80sp"
+            android:background="@drawable/bottons"
+            android:text="Ответить"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/newWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="190sp"
+            android:layout_marginRight="50sp"
+            android:layout_marginTop="40sp"
+            android:background="@drawable/bottons"
+            android:text="Добавить слово"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+
+
 
 </android.support.constraint.ConstraintLayout>
