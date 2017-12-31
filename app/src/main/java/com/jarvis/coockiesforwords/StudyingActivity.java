@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Random;
+
 public class StudyingActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button newWord,answer;
@@ -31,18 +33,21 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
 
         dbHelper = new DBHelper(this);
 
+        final Random random = new Random();
+
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         Cursor cursor = database.query(DBHelper.TABLE_WORDS,
                 new String[] {DBHelper.KEY_ENG, DBHelper.KEY_RUS},
-                "_id = ?",
-                new String[] {Integer.toString(1)},
+                null,null,
                 null, null, null);
 
         //Cursor cursor = database.rawQuery("SELECT eng FROM words WHERE _id=1",null);
 
-        //уже головое англиское слово
+        int randWord=random.nextInt(cursor.getCount());
+
         String engContent="";
-        if(cursor.moveToFirst()){
+        if(cursor.moveToPosition(randWord)){
+            //уже головое англиское слово
             engContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_ENG));
         }
         word.setText(engContent);
