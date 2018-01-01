@@ -14,13 +14,13 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
 
     Button newWord,answer,pass;
     TextView word,result;
-    DBHelper dbHelper;
     EditText transWord;
 
     String engContent;
     String rusContent;
 
     Cursor cursor;
+    boolean langFlag;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,11 +52,20 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.answer:
                 String answerWord = transWord.getText().toString();
-                if(rusContent.equals(answerWord)){
-                    result.setText("Правильно");
-                    setRandWord();
+                if(langFlag){
+                    if(rusContent.equals(answerWord)){
+                        result.setText("Правильно");
+                        setRandWord();
+                    }else{
+                        result.setText("Не верно");
+                    }
                 }else{
-                    result.setText("Не верно");
+                    if(engContent.equals(answerWord)){
+                        result.setText("Правильно");
+                        setRandWord();
+                    }else{
+                        result.setText("Не верно");
+                    }
                 }
                 break;
 
@@ -73,19 +82,25 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void setRandWord(){
+        DBHelper dbHelper;
         dbHelper = new DBHelper(this);
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         cursor = database.rawQuery("SELECT eng,rus FROM words ORDER BY Random() LIMIT 1",null);
 
-        //int randWord=random.nextInt(cursor.getCount());
-        //cursor.moveToPosition(randWord)
+        java.util.Random r = new java.util.Random();
         if(cursor.moveToFirst()){
             //уже головые слова
             engContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_ENG));
             rusContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_RUS));
         }
 
-        word.setText(engContent);
+        if(r.nextBoolean()){
+            word.setText(engContent);
+            langFlag=true;
+        }else{
+            word.setText(rusContent);
+            langFlag=false;
+        }
         transWord.setText(null);
 
         database.close();
