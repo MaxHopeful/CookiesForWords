@@ -20,8 +20,8 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
     DBHelper dbHelper;
     EditText transWord;
 
-    String engContent="";
-    String rusContent="";
+    String engContent;
+    String rusContent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +77,8 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
                 String answerWord = transWord.getText().toString();
                 if(rusContent.equals(answerWord)){
                     result.setText("Правильно");
+                    finish();
+                    this.startActivity(new Intent( this , this.getClass() ));
                 }else{
                     result.setText("Не верно");
                 }
