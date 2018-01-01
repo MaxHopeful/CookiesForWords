@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class StudyingActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button newWord,answer;
+    Button newWord,answer,pass;
     TextView word,result;
     DBHelper dbHelper;
     EditText transWord;
@@ -33,13 +33,15 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
         answer = (Button) findViewById(R.id.answer);
         answer.setOnClickListener(this);
 
+        pass = (Button) findViewById(R.id.pass);
+        pass.setOnClickListener(this);
+
         transWord = (EditText) findViewById(R.id.transWord);
 
         word = (TextView) findViewById(R.id.word);
         result = (TextView) findViewById(R.id.result);
 
         setRandWord();
-        word.setText(engContent);
 
     }
 
@@ -53,11 +55,14 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
                 if(rusContent.equals(answerWord)){
                     result.setText("Правильно");
                     setRandWord();
-                    word.setText(engContent);
                 }else{
                     result.setText("Не верно");
                 }
+                break;
 
+            case R.id.pass:
+                setRandWord();
+                result.setText("");
                 break;
             case R.id.newWord:
                 Intent intent = new Intent(this,MainActivity.class);
@@ -79,6 +84,9 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
             engContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_ENG));
             rusContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_RUS));
         }
+
+        word.setText(engContent);
+        transWord.setText(null);
 
         database.close();
         cursor.close();
