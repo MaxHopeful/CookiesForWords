@@ -5,13 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.Random;
 
 public class StudyingActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,6 +19,8 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
 
     String engContent;
     String rusContent;
+
+    Cursor cursor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,31 +38,7 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
         word = (TextView) findViewById(R.id.word);
         result = (TextView) findViewById(R.id.result);
 
-        dbHelper = new DBHelper(this);
-
-        final Random random = new Random();
-
-        SQLiteDatabase database = dbHelper.getReadableDatabase();
-        Cursor cursor = database.query(DBHelper.TABLE_WORDS,
-                new String[] {DBHelper.KEY_ENG, DBHelper.KEY_RUS},
-                null,null,
-                null, null, null);
-
-        //Cursor cursor = database.rawQuery("SELECT eng FROM words WHERE _id=1",null);
-
-        int randWord=random.nextInt(cursor.getCount());
-
-
-        if(cursor.moveToPosition(randWord)){
-            //уже головые слова
-            engContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_ENG));
-            rusContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_RUS));
-        }
-
-        cursor.close();
-        database.close();
-
-
+        setRandWord();
         word.setText(engContent);
 
     }
@@ -77,8 +52,8 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
                 String answerWord = transWord.getText().toString();
                 if(rusContent.equals(answerWord)){
                     result.setText("Правильно");
-                    finish();
-                    this.startActivity(new Intent( this , this.getClass() ));
+                    setRandWord();
+                    word.setText(engContent);
                 }else{
                     result.setText("Не верно");
                 }
@@ -90,6 +65,23 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
        }
+    }
+
+    public void setRandWord(){
+        dbHelper = new DBHelper(this);
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        cursor = database.rawQuery("SELECT eng,rus FROM words ORDER BY Random() LIMIT 1",null);
+
+        //int randWord=random.nextInt(cursor.getCount());
+        //cursor.moveToPosition(randWord)
+        if(cursor.moveToFirst()){
+            //уже головые слова
+            engContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_ENG));
+            rusContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_RUS));
+        }
+
+        database.close();
+        cursor.close();
     }
 
 }

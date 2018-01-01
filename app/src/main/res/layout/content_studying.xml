@@ -42,7 +42,7 @@
             android:layout_marginTop="20sp"
             android:background="@drawable/fields"
             android:ems="10"
-            android:hint="Английское слово"
+            android:hint="Перевод слова"
             android:inputType="textPersonName"
             android:padding="10sp"
             android:textAlignment="center"
