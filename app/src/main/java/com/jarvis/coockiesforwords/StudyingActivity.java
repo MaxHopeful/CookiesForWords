@@ -20,7 +20,8 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
     DBHelper dbHelper;
     EditText transWord;
 
-
+    String engContent="";
+    String rusContent="";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,32 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
         word = (TextView) findViewById(R.id.word);
         result = (TextView) findViewById(R.id.result);
 
+        dbHelper = new DBHelper(this);
 
-        word.setText(getWord("eng"));
+        final Random random = new Random();
+
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        Cursor cursor = database.query(DBHelper.TABLE_WORDS,
+                new String[] {DBHelper.KEY_ENG, DBHelper.KEY_RUS},
+                null,null,
+                null, null, null);
+
+        //Cursor cursor = database.rawQuery("SELECT eng FROM words WHERE _id=1",null);
+
+        int randWord=random.nextInt(cursor.getCount());
+
+
+        if(cursor.moveToPosition(randWord)){
+            //уже головые слова
+            engContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_ENG));
+            rusContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_RUS));
+        }
+
+        cursor.close();
+        database.close();
+
+
+        word.setText(engContent);
 
     }
 
@@ -50,7 +75,7 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.answer:
                 String answerWord = transWord.getText().toString();
-                if(getWord("rus").equals(answerWord)){
+                if(rusContent.equals(answerWord)){
                     result.setText("Правильно");
                 }else{
                     result.setText("Не верно");
@@ -64,42 +89,5 @@ public class StudyingActivity extends AppCompatActivity implements View.OnClickL
 
        }
     }
-
-    public String getWord(String langWord) {
-        dbHelper = new DBHelper(this);
-        String engContent = "";
-        String rusContent = "";
-
-        final Random random = new Random();
-
-        SQLiteDatabase database = dbHelper.getReadableDatabase();
-        Cursor cursor = database.query(DBHelper.TABLE_WORDS,
-                new String[]{DBHelper.KEY_ENG, DBHelper.KEY_RUS},
-                null, null,
-                null, null, null);
-
-        //Cursor cursor = database.rawQuery("SELECT eng FROM words WHERE _id=1",null);
-
-        int randWord = random.nextInt(cursor.getCount());
-
-        if (cursor.moveToPosition(randWord)) {
-            //уже головое англиское слово
-            engContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_ENG));
-            rusContent = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_RUS));
-        }
-
-        cursor.close();
-        database.close();
-
-        switch (langWord) {
-            case "rus":
-                return rusContent;
-            case "eng":
-                return engContent;
-            default:
-                return null;
-        }
-    }
-
 
 }
